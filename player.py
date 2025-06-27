@@ -21,6 +21,9 @@ class Player(CircleShape):
     def move(self, dt):
         self.position += pygame.Vector2(0, 1).rotate(self.rotation) * dt * PLAYER_SPEED 
     
+    def draw(self, screen):
+        pygame.draw.polygon(screen, "white", self.triangle(), 2)
+
     def update(self, dt):
         keys = pygame.key.get_pressed()
 
