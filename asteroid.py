@@ -19,8 +19,8 @@ class Asteroid(CircleShape):
         rand_angle = random.uniform(20, 50)
         vec_1 = self.velocity.rotate(rand_angle)
         vec_2 = self.velocity.rotate(-rand_angle)
-        size_1 = self.radius * (0.3+0.4*random.random())
-        size_2 = self.radius - size_1
+        size_1 = self.radius - ASTEROID_MIN_RADIUS
+        size_2 = self.radius - ASTEROID_MIN_RADIUS
         new_asteroid_1 = Asteroid(self.position.x, self.position.y, size_1)
         new_asteroid_1.velocity = vec_1 * 1.2
         new_asteroid_2 = Asteroid(self.position.x, self.position.y, size_2)
