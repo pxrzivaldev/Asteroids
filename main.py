@@ -72,6 +72,14 @@ def main():
                         shot.kill()
             pygame.display.flip()
             clock.tick(FPS_LIMIT)
+            asteroid_list = asteroids.sprites()
+            for i in range(len(asteroid_list)):
+                for j in range(i + 1, len(asteroid_list)):
+                    a1 = asteroid_list[i]
+                    a2 = asteroid_list[j]
+                    if a1.check_collision(a2):
+                        a1.a_a_collision(a2)
+
         elif game_over:
             screen.fill((0, 0, 0))
             for thing in drawable:
@@ -119,14 +127,12 @@ def main():
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
-                    sys.exit()
             if keys[pygame.K_r]:
                 game_over = False
                 player_alive = True
                 player, asteroidfield = start_game()
             if keys[pygame.K_q]:
                 pygame.quit()
-                sys.exit()
             clock.tick(FPS_LIMIT)
 
 
