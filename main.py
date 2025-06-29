@@ -7,6 +7,7 @@ from player import *
 from asteroid import *
 from asteroidfield import *
 from shot import *
+from camera import *
 
 
 def main():
@@ -19,13 +20,17 @@ def main():
 
         Player.containers = (updatable, drawable)
         Asteroid.containers = (asteroids, updatable, drawable)
-        AsteroidField.containers = (updatable,)
+        AsteroidField.containers = (updatable, drawable)
         Shot.containers = (shots, updatable, drawable)
+        Camera.containers = (updatable)
 
-        player = Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
+        player = Player(0, 0)
         asteroidfield = AsteroidField()
+        camera = Camera()
+        print("setting camera target")
+        camera.set_target(player)
 
-        return player, asteroidfield
+        return player, asteroidfield, camera
 
     print("Starting Asteroids!")
     pygame.init()
@@ -36,15 +41,14 @@ def main():
     drawable = pygame.sprite.Group()
     asteroids = pygame.sprite.Group()
     shots = pygame.sprite.Group()
-
+    
     #init Clock
     clock = pygame.time.Clock()
     dt = 0
 
-
-    player, asteroidfield = start_game()
     player_alive = False
     game_over = False
+
     while True:
         if player_alive:
             for event in pygame.event.get():
@@ -59,8 +63,8 @@ def main():
                 thing.update(dt)
 
             for thing in drawable:
-                thing.draw(screen)
-        
+                thing.draw(screen, camera.position)
+
             for asteroid in asteroids:
                 if asteroid.check_collision(player):
                     print("Game Over!")
@@ -83,7 +87,7 @@ def main():
         elif game_over:
             screen.fill((0, 0, 0))
             for thing in drawable:
-                thing.draw(screen)
+                thing.draw(screen, camera.position)
             font = pygame.font.SysFont(None, 72)
             text = font.render("GAME OVER", True, (255, 0, 0))
             screen.blit(text, (screen.get_width() // 2 - text.get_width() // 2, screen.get_height() // 2 - text.get_height() // 2))
@@ -106,7 +110,7 @@ def main():
             if keys[pygame.K_r]:
                 game_over = False
                 player_alive = True
-                player, asteroidfield = start_game()
+                player, asteroidfield, camera = start_game()
             if keys[pygame.K_q]:
                 pygame.quit()
                 sys.exit()
@@ -130,7 +134,7 @@ def main():
             if keys[pygame.K_r]:
                 game_over = False
                 player_alive = True
-                player, asteroidfield = start_game()
+                player, asteroidfield, camera = start_game()
             if keys[pygame.K_q]:
                 pygame.quit()
             clock.tick(FPS_LIMIT)

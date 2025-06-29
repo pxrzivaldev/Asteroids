@@ -57,18 +57,21 @@ class Player(CircleShape):
             direction *= -0.5
         self.velocity += direction * PLAYER_ACCELERATION * dt    
 
-    def draw(self, screen):
-        pygame.draw.polygon(screen, "white", self.triangle(), 2)
+    def draw(self, screen, offset: pygame.Vector2):
+        def offset_points(points):
+            return [point - offset for point in points]
+
+        pygame.draw.polygon(screen, "white", offset_points(self.triangle()), 2)
 
         if self.thrusting_backwards:
             self.thrusting_left = True
             self.thrusting_right = True
         if self.thrusting_forwards:
-            pygame.draw.polygon(screen, "orange", self.thrust_flame())
+            pygame.draw.polygon(screen, "orange", offset_points(self.thrust_flame()))
         if self.thrusting_left:
-            pygame.draw.polygon(screen, "orange", self.left_rotation_flame())
+            pygame.draw.polygon(screen, "orange", offset_points(self.left_rotation_flame()))
         if self.thrusting_right:
-            pygame.draw.polygon(screen, "orange", self.right_rotation_flame())
+            pygame.draw.polygon(screen, "orange", offset_points(self.right_rotation_flame()))
 
     def update(self, dt):
         keys = pygame.key.get_pressed()
