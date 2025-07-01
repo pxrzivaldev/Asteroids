@@ -1,0 +1,19 @@
+add triangle circle collision
+
+add hp
+    animated hp loss
+
+add dmgtype
+    physical
+        mass*delta_V
+    energy/laser
+        flatdps
+    explosion
+        flatdamage
+
+adjust split():
+    intersectpoint
+    on split:
+        +-(normalvektor+90° intersectpoint->this.pos * self.size - aMinRad/2)
+
+add hud

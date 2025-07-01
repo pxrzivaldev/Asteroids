@@ -7,50 +7,45 @@ from constants import *
 class AsteroidField(pygame.sprite.Sprite):
     edges = [
         [
-            pygame.Vector2(1, 0),
-            lambda y: pygame.Vector2(-ASTEROID_MAX_RADIUS, y * SCREEN_HEIGHT),
-        ],
-        [
-            pygame.Vector2(-1, 0),
+            pygame.Vector2(1, 0),  # from left to right
             lambda y: pygame.Vector2(
-                SCREEN_WIDTH + ASTEROID_MAX_RADIUS, y * SCREEN_HEIGHT
+                -ASTEROID_MAX_RADIUS - SCREEN_WIDTH / 2,
+                (y * SCREEN_HEIGHT) - SCREEN_HEIGHT / 2,
             ),
         ],
         [
-            pygame.Vector2(0, 1),
-            lambda x: pygame.Vector2(x * SCREEN_WIDTH, -ASTEROID_MAX_RADIUS),
+            pygame.Vector2(-1, 0),  # from right to left
+            lambda y: pygame.Vector2(
+                SCREEN_WIDTH + ASTEROID_MAX_RADIUS - SCREEN_WIDTH / 2,
+                (y * SCREEN_HEIGHT) - SCREEN_HEIGHT / 2,
+            ),
         ],
         [
-            pygame.Vector2(0, -1),
+            pygame.Vector2(0, 1),  # from top to bottom
             lambda x: pygame.Vector2(
-                x * SCREEN_WIDTH, SCREEN_HEIGHT + ASTEROID_MAX_RADIUS
+                (x * SCREEN_WIDTH) - SCREEN_WIDTH / 2,
+                -ASTEROID_MAX_RADIUS - SCREEN_HEIGHT / 2,
+            ),
+        ],
+        [
+            pygame.Vector2(0, -1),  # from bottom to top
+            lambda x: pygame.Vector2(
+                (x * SCREEN_WIDTH) - SCREEN_WIDTH / 2,
+                SCREEN_HEIGHT + ASTEROID_MAX_RADIUS - SCREEN_HEIGHT / 2,
             ),
         ],
     ]
 
     def draw(self, screen, offset):
-        edge_color = (100, 255, 100)  # light green for visibility
+        edge_color = (100, 255, 100)  # Light green
         edge_thickness = 2
-        # Top edge
-        pygame.draw.line(screen, edge_color, (0 - offset.x, 0 - offset.y), (SCREEN_WIDTH - offset.x, 0 - offset.y), 2)
-        # Bottom edge
-        pygame.draw.line( screen, edge_color, (0 - offset.x, SCREEN_HEIGHT - offset.y), (SCREEN_WIDTH - offset.x, SCREEN_HEIGHT - offset.y),2)
-        # Left edge
-        pygame.draw.line(
-            screen,
-            edge_color,
-            (0 - offset.x, 0 - offset.y),
-            (0 - offset.x, SCREEN_HEIGHT - offset.y),
-            2
-        )
-        # Right edge
-        pygame.draw.line(
-            screen,
-            edge_color,
-            (SCREEN_WIDTH - offset.x, 0 - offset.y),
-            (SCREEN_WIDTH - offset.x, SCREEN_HEIGHT - offset.y),
-            2
-        )
+
+        for direction, position_func in self.edges:
+            # Use t=0 and t=1 to get the start and end points of each edge
+            start = position_func(0) - offset
+            end = position_func(1) - offset
+
+            pygame.draw.line(screen, edge_color, start, end, edge_thickness)
 
     def __init__(self):
         pygame.sprite.Sprite.__init__(self, self.containers)
