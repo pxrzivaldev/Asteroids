@@ -8,6 +8,7 @@ from asteroid import *
 from asteroidfield import *
 from shot import *
 from camera import *
+from starfield import *
 
 
 def main():
@@ -17,20 +18,22 @@ def main():
         pygame.sprite.Group.empty(drawable)
         pygame.sprite.Group.empty(asteroids)
         pygame.sprite.Group.empty(shots)
+        pygame.sprite.Group.empty(cam_updatable)
 
         Player.containers = (updatable, drawable)
         Asteroid.containers = (asteroids, updatable, drawable)
         AsteroidField.containers = (updatable, drawable)
         Shot.containers = (shots, updatable, drawable)
         Camera.containers = (updatable)
+        Starfield.containers = (cam_updatable, drawable)
 
         player = Player(0, 0)
         asteroidfield = AsteroidField()
         camera = Camera()
-        print("setting camera target")
         camera.set_target(player)
+        starfield = Starfield()
 
-        return player, asteroidfield, camera
+        return player, asteroidfield, camera, starfield
 
     print("Starting Asteroids!")
     pygame.init()
@@ -41,6 +44,7 @@ def main():
     drawable = pygame.sprite.Group()
     asteroids = pygame.sprite.Group()
     shots = pygame.sprite.Group()
+    cam_updatable = pygame.sprite.Group()
     
     #init Clock
     clock = pygame.time.Clock()
@@ -61,6 +65,9 @@ def main():
 
             for thing in updatable:
                 thing.update(dt)
+
+            for thing in cam_updatable:
+                thing.update(camera.position)
 
             for thing in drawable:
                 thing.draw(screen, camera.position)
@@ -110,7 +117,7 @@ def main():
             if keys[pygame.K_r]:
                 game_over = False
                 player_alive = True
-                player, asteroidfield, camera = start_game()
+                player, asteroidfield, camera, starfield = start_game()
             if keys[pygame.K_q]:
                 pygame.quit()
                 sys.exit()
@@ -134,7 +141,7 @@ def main():
             if keys[pygame.K_r]:
                 game_over = False
                 player_alive = True
-                player, asteroidfield, camera = start_game()
+                player, asteroidfield, camera, starfield = start_game()
             if keys[pygame.K_q]:
                 pygame.quit()
             clock.tick(FPS_LIMIT)
