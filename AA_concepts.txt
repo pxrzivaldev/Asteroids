@@ -28,3 +28,13 @@ player movement
     pos <- pos + velocity*dt
     forward <- forward + angular_velocity*dt
     velocity <- velocity + acceleration*forward*dt
+
+    pos + velocity * dt
+
+    mx² + nx + b
+    pos = pos + (velocity + acceleration*(forward + angular_velocity*dt)*dt)*dt
+    
+    dt -> 0 - 3
+
+
+asteroidspawn seedrng

@@ -12,6 +12,7 @@ class Player(CircleShape):
         self.thrusting_backwards = False
         self.thrusting_forwards = False
         self.angular_velocity = 0  
+        self.acceleration = pygame.Vector2(0, 0)
 
     def triangle(self):
         front = pygame.Vector2(0, 1).rotate(self.rotation)
@@ -55,7 +56,7 @@ class Player(CircleShape):
         direction = pygame.Vector2(0, 1).rotate(self.rotation)
         if self.thrusting_backwards:
             direction *= -0.5
-        self.velocity += direction * PLAYER_ACCELERATION * dt    
+        self.acceleration += direction * PLAYER_ACCELERATION
 
     def draw(self, screen, offset: pygame.Vector2):
         def offset_points(points):
@@ -79,6 +80,7 @@ class Player(CircleShape):
         self.thrusting_backwards = False
         self.thrusting_left = False
         self.thrusting_right = False
+        self.acceleration = pygame.Vector2(0, 0)
 
         if self.shoot_cd > 0:
             self.shoot_cd-=1*dt
@@ -104,7 +106,8 @@ class Player(CircleShape):
         self.angular_velocity *= pow(PLAYER_ANGULAR_DRAG, dt)
         if abs(self.angular_velocity) < ANGULAR_THRESHOLD:
             self.angular_velocity = 0
-        self.rotation += self.angular_velocity * dt * 100
+        self.rotation += self.angular_velocity * dt
+        self.velocity += self.acceleration * dt
         self.position += self.velocity * dt
 
     def shoot(self):

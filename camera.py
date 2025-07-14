@@ -7,7 +7,7 @@ class Camera(pygame.sprite.Sprite):
         self.position = - pygame.math.Vector2((SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2))
         self.player_tracking: Player | None = None
         self.target_position = - pygame.math.Vector2((SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2))
-        self.rate = 1
+        self.rate = 5
 
     def set_position(self, position):
         self.target_position = position - pygame.math.Vector2((SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2))

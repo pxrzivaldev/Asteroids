@@ -9,6 +9,7 @@ from asteroidfield import *
 from shot import *
 from camera import *
 from starfield import *
+from predictline import *
 
 
 def main():
@@ -65,6 +66,8 @@ def main():
 
             for thing in updatable:
                 thing.update(dt)
+
+            draw_predicted_path(screen, player, camera.position)
 
             for thing in cam_updatable:
                 thing.update(camera.position)
@@ -145,7 +148,6 @@ def main():
             if keys[pygame.K_q]:
                 pygame.quit()
             clock.tick(FPS_LIMIT)
-
 
 if __name__ == "__main__":
     main()
