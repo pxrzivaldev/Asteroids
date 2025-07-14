@@ -1,5 +1,5 @@
 import pygame
-
+from constants import *
 
 class HudElement(pygame.sprite.Sprite):
     def __init__(self, x, y, radius):
@@ -7,8 +7,7 @@ class HudElement(pygame.sprite.Sprite):
             super().__init__(self.containers)
         else:
             super().__init__()
-
-        self.position = pygame.Vector2(x, y)
+        self.screen_pos = pygame.Vector2(x, y)
 
     def draw(self, screen):
         pass

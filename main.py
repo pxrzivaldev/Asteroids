@@ -88,12 +88,12 @@ def main():
             screen.fill((0, 0, 0))
             for thing in drawable:
                 thing.draw(screen, camera.position)
-            font = pygame.font.SysFont(None, 72)
+            font = pygame.font.Font('font/Expansiva_bold.ttf', 72)
             text = font.render("GAME OVER", True, (255, 0, 0))
             screen.blit(text, (screen.get_width() // 2 - text.get_width() // 2, screen.get_height() // 2 - text.get_height() // 2))
 
             # Optional: Add "Press R to Retry"
-            font_small = pygame.font.SysFont(None, 36)
+            font_small = pygame.font.Font('font/CreatoDisplay-Medium.ttf', 36)
             subtext0 = font_small.render("Press E - Main Menu", True, (255, 255, 255))
             subtext1 = font_small.render("Press R - Restart", True, (255, 255, 255))
             subtext2 = font_small.render("Press Q - Quit", True, (255, 255, 255))
@@ -121,7 +121,7 @@ def main():
             screen.fill((0, 0, 0))
 
             # Finalize drawing
-            font_small = pygame.font.SysFont(None, 36)
+            font_small = pygame.font.Font('font/CreatoDisplay-Medium.ttf', 36)
             subtext = font_small.render("Press R to Start or Q to Quit", True, (255, 255, 255))
             screen.blit(subtext, (screen.get_width() // 2 - subtext.get_width() // 2, screen.get_height() // 2 + 60))
             pygame.display.flip()
