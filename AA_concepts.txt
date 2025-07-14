@@ -17,3 +17,14 @@ adjust split():
         +-(normalvektor+90° intersectpoint->this.pos * self.size - aMinRad/2)
 
 add hud
+    hp bar
+    ammo
+    fuel
+    stat tab
+    trajetory
+        pos +
+
+player movement
+    pos <- pos + velocity*dt
+    forward <- forward + angular_velocity*dt
+    velocity <- velocity + acceleration*forward*dt
